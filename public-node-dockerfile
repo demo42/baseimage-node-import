@@ -1,4 +1,4 @@
 FROM node:9-alpine
 ENV NODE_VERSION 9-white
-ENV BACKGROUND_COLOR=white
+ENV BACKGROUND_COLOR=green
 
