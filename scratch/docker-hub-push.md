@@ -10,6 +10,7 @@
   export DOCKER_HUB_USER=stevelasker
   export DOCKER_HUB_TOKEN=[REPLACE-TOKEN-VALUE]
   ```
+
 ### Create Key Vault Entries
 
 - For Docker Hub Credentials
@@ -25,6 +26,11 @@
   --vault-name $AKV_NAME \
   --name docker-hub-token \
   --value $DOCKER_HUB_TOKEN
+
+  az keyvault secret set \
+  --vault-name $AKV_NAME \
+  --name github-token \
+  --value $GITHUB_TOKEN
   ```
 
 ### Create a Docker Hub Base Image Repo
