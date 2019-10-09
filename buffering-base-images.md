@@ -81,18 +81,24 @@ With our central and dev registries created, setup the workflow for importing, t
 
 - Create an ACR Tasks to monitor the *public (simulated)* base image
 
-```sh
-az acr task create \
-    --name import-node-to-staging \
-    --registry $REGISTRY_CENTRAL \
-    --file ./public-node-task.yaml \
-    --set USER=$USER \
-    --set AKV_NAME=$AKV_NAME \
-    --set REGISTRY_CENTRAL=$REGISTRY_CENTRAL \
-    --context https://github.com/demo42/baseimage-node-import.git \
-    --commit-trigger-enabled false \
-    --assign-identity
-```
+  ```sh
+  az acr task create \
+      --name import-node-to-staging \
+      --registry $REGISTRY_CENTRAL \
+      --file ./import-node-staging-task.yaml \
+      --set USER=$USER \
+      --set AKV_NAME=$AKV_NAME \
+      --set REGISTRY_CENTRAL=$REGISTRY_CENTRAL \
+      --context https://github.com/demo42/baseimage-node-import.git \
+      --commit-trigger-enabled false \
+      --assign-identity
+  ```
+
+- Manually run the task to start tracking the base image
+
+  ```sh
+  az acr task run -r $REGISTRY_CENTRAL --name import-node-to-staging
+  ```
 
 - A task that:
   - builds the image, to enable base image tracking

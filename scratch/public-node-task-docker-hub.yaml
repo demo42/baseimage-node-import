@@ -1,0 +1,13 @@
+version: v1.0.0
+secrets:
+  - id: DOCKER_HUB_USER
+    keyvault: https://{{.Values.AKV_NAME}}.vault.azure.net/secrets/docker-hub-username
+  - id: DOCKER_HUB_TOKEN
+    keyvault: https://{{.Values.AKV_NAME}}.vault.azure.net/secrets/docker-hub-token
+steps:
+# Build target image
+- build: -t {{.Values.USER}}/node:9-alpine -f public-node-dockerfile .
+# Log in to Docker Hub
+  - cmd: docker login --username '{{.Secrets.DOCKER_HUB_USER}}' --password '{{.Secrets.DOCKER_HUB_TOKEN}}'
+# Login
+- push: ["{{.Values.USER}}/node:9-alpine"]
