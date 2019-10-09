@@ -1,0 +1,8 @@
+version: v1.0.0
+steps:
+# Build target image
+- build: -t {{.Run.Registry}}/staging/node:9-alpine -f import-node-dockerfile .
+# Login
+- cmd: "mcr.microsoft.com/azure-cli az login --identity"
+# Push Import Image
+- cmd: "mcr.microsoft.com/azure-cli az acr import --name {{.Values.REGISTRY_CENTRAL}} --source {{.Run.Registry}}/public/node:9-alpine -t staging/node:9-alpine --force"
