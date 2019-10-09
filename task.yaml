@@ -1,8 +1,8 @@
 version: v1.0.0
 steps:
 # Build target image
-# - build: -t {{.Run.Registry}}/node:9-alpine -f Dockerfile .
+- build: -t {{.Run.Registry}}/node:9-alpine -f Dockerfile .
 # Login
 - cmd: "mcr.microsoft.com/azure-cli az login --identity"
-# Push image
-- cmd: "mcr.microsoft.com/azure-cli az acr import --name contosobaseimages --source docker.io/library/node:9-alpine -t staging/node:9-alpine --force"
+# Push Import Image
+- cmd: "mcr.microsoft.com/azure-cli az acr import --name contosobaseimages --source docker.io/stevelasker/node:9-alpine -t staging/node:9-alpine --force"

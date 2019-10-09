@@ -1,1 +1,2 @@
-FROM node:9-alpine
+ARG USER=stevelasker
+FROM ${USER}/node:9-alpine

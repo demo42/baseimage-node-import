@@ -1,0 +1,6 @@
+version: v1.0.0
+steps:
+# Build target image
+- build: -t {{.Values.USER}}/node:9-alpine -f public-node-dockerfile .
+# Login
+- push: ["{{.Values.USER}}/node:9-alpine"]
