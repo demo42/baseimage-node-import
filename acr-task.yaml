@@ -10,7 +10,7 @@ steps:
     # only continues if node-import:test returns a non-zero code
   - id: az-login
     cmd: >
-      az login --identity -o jsonc #> /dev/null
+      az login --identity -o jsonc --debug #> /dev/null
     # login with the identity of the task
   - id: import-node-to-base-artifacts
     cmd: >
