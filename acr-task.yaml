@@ -20,4 +20,5 @@ steps:
       -t base-artifacts/node:9-alpine
       -t base-artifacts/node:9-alpine-$ID
       --force
+      --debug
   
