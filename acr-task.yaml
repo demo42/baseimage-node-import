@@ -1,0 +1,23 @@
+version: v1.1.0
+steps:
+  - id: build-base-image-test
+    build: >
+      -f ./Dockerfile
+      -t $Registry/node-import:test
+      .
+  - id: validate-base-image
+    cmd: $Registry/node-import:test
+    # only continues if node-import:test returns a non-zero code
+  - id: az-login
+    cmd: >
+      az login --identity -o jsonc #> /dev/null
+    # login with the identity of the task
+  - id: import-node-to-base-artifacts
+    cmd: >
+      az acr import 
+      --name $RegistryName 
+      --source $Registry/hub/node:9-alpine 
+      -t base-artifacts/node:9-alpine
+      -t base-artifacts/node:9-alpine-$ID
+      --force
+  

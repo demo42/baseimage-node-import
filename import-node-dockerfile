@@ -1,2 +1,0 @@
-ARG REGISTRY=contosobaseimages.azurecr.io
-FROM ${REGISTRY}/public/node:9-alpine
