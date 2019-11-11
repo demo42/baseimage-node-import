@@ -11,12 +11,13 @@ steps:
     # run concurrently while the image is building: when:
     when: [-]
     cmd: >
-      az login --identity #> /dev/null
+      az login --identity > /dev/null
   - id: validate-base-image
     when: ['build-base-image-test']
     cmd: $Registry/node-import:test
     # only continues if node-import:test returns a non-zero code
   - id: import-node-to-base-artifacts
+    # Once login and image validation is/if complete, push the image to base-artifacts
     when: ['az-login', 'validate-base-image']
     cmd: >
       az acr import 
