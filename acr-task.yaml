@@ -10,7 +10,7 @@ steps:
     # login with the identity of the task
     # run concurrently while the image is building: when:
     cmd: >
-      az login --identity -o jsonc --debug #> /dev/null
+      az login --identity #> /dev/null
     when: [-]
   - id: validate-base-image
     cmd: $Registry/node-import:test
@@ -25,5 +25,4 @@ steps:
       -t base-artifacts/node:9-alpine
       -t base-artifacts/node:9-alpine-$ID
       --force
-      --debug
-    when: ['validate-base-image']
+    when: ['az-login`, 'validate-base-image']
