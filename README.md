@@ -41,7 +41,7 @@ For the purposes of this demo, we'll create the 3 in single registry
 
 ```sh
 git clone https://github.com/demo42/baseimage-node-import.git
-git clone https://github.com/demo42/upstream-node.git
+git clone https://github.com/demo42/upstream-.git
 git clone https://github.com/demo42/helloworld.git
 ```
 
