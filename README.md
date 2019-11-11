@@ -260,15 +260,15 @@ Staging a base image, by importing it from upstream, validating it, before it be
   Contributor access is needed for the acr import command, which uses the CLI
 
   ```sh
-  az acr task create \
-    -n node-import-to-staging \
-    --assign-identity  \
-    -f acr-task.yaml \
-    --context ${GIT_NODE_IMPORT} \
-    --git-access-token $(az keyvault secret show \
-                          --vault-name ${AKV_NAME} \
-                          --name ${GIT_TOKEN_NAME} \
-                          --query value -o tsv)
+az acr task create \
+  -n node-import-to-staging \
+  --assign-identity  \
+  -f acr-task.yaml \
+  --context ${GIT_NODE_IMPORT} \
+  --git-access-token $(az keyvault secret show \
+                        --vault-name ${AKV_NAME} \
+                        --name ${GIT_TOKEN_NAME} \
+                        --query value -o tsv)
   
   az role assignment create \
     --role Contributor \
@@ -313,3 +313,4 @@ time az acr import --source demo42upstream.azurecr.io/library/node:9-alpine -t b
 [acr-import]:   https://aka.ms/acr/import
 [acr-tasks]:    https://aka.ms/acr/tasks
 [acr-rbac]:     https://docs.microsoft.com/azure/container-registry/container-registry-repository-scoped-permissions
+

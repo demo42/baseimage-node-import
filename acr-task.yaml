@@ -9,10 +9,13 @@ steps:
     cmd: $Registry/node-import:test
     # only continues if node-import:test returns a non-zero code
   - id: az-login
+    # login with the identity of the task
+    # run concurrently while the image is building: when:
     cmd: >
       az login --identity -o jsonc --debug #> /dev/null
-    # login with the identity of the task
+    when: [-]
   - id: import-node-to-base-artifacts
+    when: [`az-login`, `build-base-image-test`]
     cmd: >
       az acr import 
       --name $RegistryName 
