@@ -1,23 +1,23 @@
 version: v1.1.0
 steps:
   - id: build-base-image-test
+    when: [-]
     build: >
       -f ./Dockerfile
       -t $Registry/node-import:test
       .
-    when: [-]
   - id: az-login
+    when: [-]
     # login with the identity of the task
     # run concurrently while the image is building: when:
     cmd: >
       az login --identity #> /dev/null
-    when: [-]
   - id: validate-base-image
+    when: ['build-base-image-test']
     cmd: $Registry/node-import:test
     # only continues if node-import:test returns a non-zero code
-    when: ['build-base-image-test']
   - id: import-node-to-base-artifacts
-    when: ['az-login', 'build-base-image-test']
+    when: ['az-login`, 'validate-base-image']
     cmd: >
       az acr import 
       --name $RegistryName 
@@ -25,4 +25,3 @@ steps:
       -t base-artifacts/node:9-alpine
       -t base-artifacts/node:9-alpine-$ID
       --force
-    when: ['az-login`, 'validate-base-image']
