@@ -51,9 +51,10 @@ git clone https://github.com/demo42/helloworld.git
 - Edit [./env.sh](./env.sh) to match your environment variables
 - Import [./env.sh](./env.sh) to your shell
 
-```sh
-source ./env.sh
-```
+  ```sh
+  source ./env.sh
+  ```
+
 ### Create Key Vault Entries
 
 - GitHub Token secret
