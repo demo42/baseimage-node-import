@@ -1,6 +1,8 @@
 version: v1.1.0
 steps:
   - id: build-base-image-test
+    # Build off the base image we'll track
+    # Add a test script to do unit test validations
     when: [-]
     build: >
       -f ./Dockerfile
@@ -8,16 +10,22 @@ steps:
       .
   - id: az-login
     # login with the identity of the task
-    # run concurrently while the image is building: when:
+    # run concurrently while the image is building: when: [-] indicates, wait for nothing
     when: [-]
     cmd: >
       az login --identity > /dev/null
   - id: validate-base-image
+    # only continues if node-import:test returns a non-zero code
     when: ['build-base-image-test']
     cmd: $Registry/node-import:test
-    # only continues if node-import:test returns a non-zero code
   - id: import-node-to-base-artifacts
-    # Once login and image validation is/if complete, push the image to base-artifacts
+    # Once login and image validation is/if complete, 
+    # import the public image to base-artifacts
+    # Note: we don't save the test validation image,
+    # but the logs captures any log validation issues
+    # We do override the stable tag, 
+    # but we also create a unique tag to enable rollback 
+    # to a previously working image
     when: ['az-login', 'validate-base-image']
     cmd: >
       az acr import 
