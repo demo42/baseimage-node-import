@@ -177,7 +177,7 @@ In [import-node-staging-task.yaml](./import-node-staging-task.yaml) we do a buil
   
   ```sh
   az acr task create \
-    --name node-import-to-staging \
+    --name node-import-base-image \
     --assign-identity  \
     -f acr-task.yaml \
     --context ${GIT_NODE_IMPORT} \
@@ -193,7 +193,7 @@ In [import-node-staging-task.yaml](./import-node-staging-task.yaml) we do a buil
   az role assignment create \
     --role Contributor \
     --assignee-object-id $(az acr task show \
-        -n node-import-to-staging \
+        -n node-import-base-image \
         --query identity.principalId \
         -o tsv) \
     --assignee-principal-type ServicePrincipal \
@@ -210,7 +210,7 @@ In [import-node-staging-task.yaml](./import-node-staging-task.yaml) we do a buil
   ```sh
   az acr task run \
     -r $ACR_BASE_NAME \
-    --node-import-to-staging
+    --node-import-base-image
   ```
 
 ### Test Base Image Notifications, w/Importing to Staging
@@ -261,7 +261,7 @@ Staging a base image, by importing it from upstream, validating it, before it be
 
   ```sh
 az acr task create \
-  -n node-import-to-staging \
+  -n node-import-base-image \
   --assign-identity  \
   -f acr-task.yaml \
   --context ${GIT_NODE_IMPORT} \
@@ -273,7 +273,7 @@ az acr task create \
   az role assignment create \
     --role Contributor \
     --assignee-object-id $(az acr task show \
-        -n node-import-to-staging \
+        -n node-import-base-image \
         --query identity.principalId \
         -o tsv) \
     --assignee-principal-type ServicePrincipal \
@@ -285,7 +285,7 @@ az acr task create \
 - Manually run the task
 
   ```sh
-  az acr task run -n node-import-to-staging
+  az acr task run -n node-import-base-image
   ```
 
 ## Make an Upstream Change
