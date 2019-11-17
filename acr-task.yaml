@@ -14,11 +14,9 @@ steps:
     when: [-]
     cmd: >
       az login --identity > /dev/null
-  - id: validate-base-image
-    # only continues if node-import:test returns a non-zero code
-    when: ['build-base-image-test']
-    cmd: $Registry/node-import:test
-  
+
+
+
   - id: import-node-to-base-artifacts
     # Once login and image validation is/if complete, 
     # import the public image to base-artifacts
@@ -27,7 +25,7 @@ steps:
     # We do override the stable tag, 
     # but we also create a unique tag to enable rollback 
     # to a previously working image
-    when: ['az-login', 'validate-base-image']
+    # when: ['az-login', 'validate-base-image']
     cmd: >
       az acr import 
       --name $RegistryName 
