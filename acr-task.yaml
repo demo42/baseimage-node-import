@@ -15,7 +15,10 @@ steps:
     cmd: >
       az login --identity > /dev/null
 
-
+  - id: validate-base-image
+    # only continues if node-import:test returns a non-zero code
+    when: ['build-base-image-test']
+    cmd: $Registry/node-import:test
 
   - id: import-node-to-base-artifacts
     # Once login and image validation is/if complete, 
@@ -31,5 +34,5 @@ steps:
       --name $RegistryName 
       --source $Registry/hub/node:9-alpine 
       -t base-artifacts/node:9-alpine
-      -t base-artifacts/node:9-alpine-$ID
+      -t base-artifacts/node:9-alpine-{{.Run.ID}}
       --force
