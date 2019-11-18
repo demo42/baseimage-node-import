@@ -18,7 +18,7 @@ steps:
   - id: validate-base-image
     # only continues if node-import:test returns a non-zero code
     when: ['build-base-image-test']
-    cmd: $Registry/node-import:test
+#    cmd: $Registry/node-import:test
 
   - id: import-node-to-base-artifacts
     # Once login and image validation is/if complete, 
